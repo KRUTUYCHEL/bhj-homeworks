@@ -2,7 +2,7 @@
   let playing = true,
     activeHole = 1;
 
-  const stop = () => playing = true,
+  const stop = () => playing = false,
     getHole = index => document.getElementById(`hole${index}`),
     deactivateHole = index =>
       getHole( index ).className = 'hole',
