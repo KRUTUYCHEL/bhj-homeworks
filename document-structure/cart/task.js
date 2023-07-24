@@ -1,4 +1,3 @@
-// task.js
 
 // Получаем элемент корзины и контейнер продуктов корзины
 const cart = document.querySelector('.cart');
@@ -11,6 +10,30 @@ productsList.addEventListener('click', addToCart);
 // Добавляем слушатель события клика на контейнер продуктов корзины
 cartProducts.addEventListener('click', removeFromCart);
 
+// Получаем элементы кнопок управления количеством товара
+const quantityButtons = document.querySelectorAll('.product__quantity-control');
+
+
+// Добавляем обработчики событий для кнопок управления количеством товара
+quantityButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const quantityValue = button.closest('.product__quantity-controls')
+      .querySelector('.product__quantity-value');
+    const currentValue = parseInt(quantityValue.textContent);
+
+    if (button.classList.contains('product__quantity-control_dec')) {
+      // Уменьшаем количество товара на 1, но не меньше 1
+      const newValue = Math.max(currentValue - 1, 1);
+      quantityValue.innerText = newValue;
+
+    } else if (button.classList.contains('product__quantity-control_inc')) {
+      // Увеличиваем количество товара на 1
+      const newValue = currentValue + 1;
+      quantityValue.innerText = newValue;
+    }
+  });
+});
+
 // Функция для добавления продукта в корзину
 function addToCart(event) {
   if (event.target.classList.contains('product__add')) {
@@ -19,6 +42,7 @@ function addToCart(event) {
     const productTitle = product.querySelector('.product__title').textContent;
     const productImage = product.querySelector('.product__image').src;
     const productQuantity = parseInt(product.querySelector('.product__quantity-value').textContent);
+
 
 
     // Проверяем, существует ли продукт уже в корзине
